@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeTrace — Women Safety Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+
+  <header>
+    <h1>🛡️ SafeTrace</h1>
+    <p>Real-Time Women Safety Threat Mapping System</p>
+  </header>
+
+  <div class="panels">
+    <div id="report-panel">
+      <h3>📍 Report an Incident</h3>
+      <select id="incident-type">
+        <option value="Harassment">Harassment</option>
+        <option value="Stalking">Stalking</option>
+        <option value="Unsafe Area">Unsafe Area</option>
+        <option value="Poor Lighting">Poor Lighting</option>
+      </select>
+      <textarea id="description" placeholder="Brief description (optional)"></textarea>
+      <p id="location-hint">📍 Click on the map to pick location</p>
+      <button onclick="submitReport()">Submit Report</button>
+    </div>
+
+    <div id="sos-panel">
+      <h3>🆘 SOS Alert</h3>
+      <p>Enter emergency contact email and click SOS</p>
+      <input type="email" id="sos-email" placeholder="Emergency contact email"/>
+      <button id="sos-btn" onclick="sendSOS()">Send SOS Now</button>
+    </div>
+
+    <div id="stats-panel">
+      <h3>📊 Statistics</h3>
+      <p id="total-count">Total Incidents: 0</p>
+      <p id="most-reported">Most Reported: -</p>
+    </div>
+  </div>
+  <div id="filter-panel">
+  <h3>🔍 Filter Incidents</h3>
+  <select id="filter-type" onchange="applyFilter()">
+    <option value="all">All Types</option>
+    <option value="Harassment">Harassment</option>
+    <option value="Stalking">Stalking</option>
+    <option value="Unsafe Area">Unsafe Area</option>
+    <option value="Poor Lighting">Poor Lighting</option>
+  </select>
+
+  <select id="filter-time" onchange="applyFilter()">
+    <option value="all">All Time</option>
+    <option value="today">Today</option>
+    <option value="week">This Week</option>
+    <option value="month">This Month</option>
+  </select>
+</div>
+<!-- AI Safety Score Panel -->
+<div id="ai-panel">
+  <h3>🤖 AI Safety Score</h3>
+  <p>Click anywhere on map to get AI safety score for that area!</p>
+  <div id="score-result" style="display:none;">
+    <h2 id="score-number"></h2>
+    <p id="score-level"></p>
+    <p id="score-incidents"></p>
+  </div>
+</div>
+
+<!-- Danger Zone Alert -->
+<div id="danger-alert" style="display:none;">
+  🚨 WARNING! You are in a HIGH RISK ZONE! Move to a safe place immediately!
+</div>
+
+ <div id="map" style="height:550px; width:100%;"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="/static/script.js"></script>
+
+</body>
+</html>
