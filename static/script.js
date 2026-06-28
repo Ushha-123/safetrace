@@ -88,6 +88,25 @@ async function loadHeatmap() {
     }).addTo(map);
   }
 }
+// WhatsApp SOS
+function sendWhatsApp() {
+  const number = document.getElementById('whatsapp-number').value;
+  if (!number) {
+    alert("⚠️ Please enter WhatsApp number with country code!\nExample: 917022334455");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+    const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
+    const message = `🆘 SOS ALERT! I need help immediately! My location: ${mapsLink}`;
+    const whatsappURL = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+  }, () => {
+    alert("❌ Location access denied. Please allow location!");
+  });
+}
 
 function sendSOS() {
   const email = document.getElementById('sos-email').value;

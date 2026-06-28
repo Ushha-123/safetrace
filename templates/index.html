@@ -29,11 +29,19 @@
     </div>
 
     <div id="sos-panel">
-      <h3>🆘 SOS Alert</h3>
-      <p>Enter emergency contact email and click SOS</p>
-      <input type="email" id="sos-email" placeholder="Emergency contact email"/>
-      <button id="sos-btn" onclick="sendSOS()">Send SOS Now</button>
-    </div>
+  <h3>🆘 Emergency Help</h3>
+  
+  <!-- Email SOS -->
+  <input type="email" id="sos-email" placeholder="Emergency contact email"/>
+  <button id="sos-btn" onclick="sendSOS()">📧 Send SOS Email</button>
+  
+  <!-- WhatsApp SOS -->
+  <input type="tel" id="whatsapp-number" placeholder="Emergency WhatsApp number (with country code e.g. 917022334455)"/>
+  <button id="whatsapp-btn" onclick="sendWhatsApp()">💬 WhatsApp SOS</button>
+
+  <!-- Call Police -->
+  <a href="tel:100" id="police-btn">📞 Call Police (100)</a>
+</div>
 
     <div id="stats-panel">
       <h3>📊 Statistics</h3>

@@ -148,60 +148,32 @@ button:hover { background: #c73652; }
   50% { opacity: 0.5; }
   100% { opacity: 1; }
 }
-#safe-time-panel {
-  background: #16213e;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 8px;
-}
 
-#safe-time-panel h3 {
-  color: #e94560;
-  margin-bottom: 10px;
-}
-
-#safe-time-result {
-  margin-top: 10px;
-}
-
-.time-box {
-  padding: 12px;
-  border-radius: 8px;
-  margin: 8px 0;
-  text-align: center;
-}
-
-.time-box.safe {
-  background: #1a4731;
-  border: 1px solid #2ecc71;
-}
-
-.time-box.danger {
-  background: #4a1528;
-  border: 1px solid #e94560;
-}
-
-.time-box h4 {
-  color: #eee;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-}
-
-.time-box p {
-  font-size: 1.1rem;
-  font-weight: bold;
+#whatsapp-btn {
+  background: #25D366;
   color: white;
-}
-
-#safe-time-message {
-  color: #aaa;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-}
-
-#safe-time-count {
-  color: #aaa;
-  font-size: 0.85rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
   margin-top: 8px;
-  text-align: center;
+  font-size: 1rem;
 }
+
+#whatsapp-btn:hover { background: #128C7E; }
+
+#police-btn {
+  display: block;
+  background: #003580;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#police-btn:hover { background: #002060; }
