@@ -119,7 +119,78 @@ def danger_check():
         "is_danger": is_danger,
         "nearby_incidents": nearby_count
     })
+@app.route("/safe-time", methods=["POST"])
+def safe_time():
+    data = request.get_json()
+    click_lat = data.get("lat")
+    click_lng = data.get("lng")
 
+    incidents = list(incidents_col.find({}, {"_id": 0}))
+
+    # Find nearby incidents
+    nearby_incidents = []
+    for inc in incidents:
+        lat_diff = abs(inc["lat"] - click_lat)
+        lng_diff = abs(inc["lng"] - click_lng)
+        distance = (lat_diff**2 + lng_diff**2) ** 0.5
+        if distance < 0.05:
+            nearby_incidents.append(inc)
+
+    if not nearby_incidents:
+        return jsonify({
+            "message": "✅ No incidents reported in this area!",
+            "safest_time": "Any time is safe",
+            "dangerous_time": "None reported",
+            "total_nearby": 0
+        })
+
+    # Analyze by hour
+    hour_counts = {}
+    for inc in nearby_incidents:
+        try:
+            hour = int(inc["timestamp"][11:13])
+            hour_counts[hour] = hour_counts.get(hour, 0) + 1
+        except:
+            pass
+
+    # Find most dangerous hour
+    if hour_counts:
+        dangerous_hour = max(hour_counts, key=hour_counts.get)
+        
+        # Find safest time
+        all_hours = list(range(24))
+        safe_hours = [h for h in all_hours if h not in hour_counts]
+        
+        # Format dangerous time
+        if dangerous_hour == 0:
+            dangerous_str = "12AM - 1AM (Midnight)"
+        elif dangerous_hour < 12:
+            dangerous_str = f"{dangerous_hour}AM - {dangerous_hour+1}AM"
+        elif dangerous_hour == 12:
+            dangerous_str = "12PM - 1PM"
+        else:
+            dangerous_str = f"{dangerous_hour-12}PM - {dangerous_hour-11}PM"
+
+        # Find safest block of hours
+        if any(6 <= h <= 9 for h in safe_hours):
+            safest_str = "6AM - 9AM (Early Morning)"
+        elif any(10 <= h <= 16 for h in safe_hours):
+            safest_str = "10AM - 4PM (Daytime)"
+        elif any(17 <= h <= 19 for h in safe_hours):
+            safest_str = "5PM - 7PM (Evening)"
+        else:
+            safest_str = "Early morning (before 6AM)"
+
+    else:
+        dangerous_str = "Unknown"
+        safest_str = "Daytime recommended"
+
+    return jsonify({
+        "message": "⚠️ Incidents reported in this area!",
+        "safest_time": safest_str,
+        "dangerous_time": dangerous_str,
+        "total_nearby": len(nearby_incidents)
+    })
 import os
 
 if __name__ == "__main__":

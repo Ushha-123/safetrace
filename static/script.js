@@ -14,19 +14,33 @@ map.on('click', async function(e) {
   document.getElementById('location-hint').textContent =
     `✅ Location selected: ${selectedLat.toFixed(4)}, ${selectedLng.toFixed(4)}`;
 
+  // Get AI Safety Score
   const res = await fetch('/safety-score', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ lat: selectedLat, lng: selectedLng })
   });
   const data = await res.json();
-
   document.getElementById('score-result').style.display = 'block';
   document.getElementById('score-number').textContent = `${data.score}/10`;
   document.getElementById('score-number').style.color = data.color;
   document.getElementById('score-level').textContent = data.level;
   document.getElementById('score-incidents').textContent =
     `${data.nearby_incidents} incidents reported nearby`;
+
+  // Get Safe Time
+  const timeRes = await fetch('/safe-time', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ lat: selectedLat, lng: selectedLng })
+  });
+  const timeData = await timeRes.json();
+  document.getElementById('safe-time-result').style.display = 'block';
+  document.getElementById('safe-time-message').textContent = timeData.message;
+  document.getElementById('safest-time').textContent = timeData.safest_time;
+  document.getElementById('dangerous-time').textContent = timeData.dangerous_time;
+  document.getElementById('safe-time-count').textContent =
+    `Based on ${timeData.total_nearby} incidents in this area`;
 });
 
 async function submitReport() {
