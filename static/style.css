@@ -77,6 +77,19 @@ button:hover { background: #c73652; }
 }
 
 #sos-btn:hover { background: #cc0000; }
+
+#whatsapp-number {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 2px solid #25D366;
+  background: #0f3460;
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+#sos-btn:hover { background: #cc0000; }
 #filter-panel {
   background: #16213e;
   padding: 15px;
